@@ -56,3 +56,28 @@ jobs:
           iex ((New-Object System.Net.WebClient).DownloadString('https://download.srcclr.com/ci.ps1'))
           srcclr scan app --allow-dirty
 
+# Workflow to run DAST Scan against QA server. 
+  Submit-DAST-Scan:
+    runs-on: ubuntu-latest
+    steps:            
+# Checkout
+      - uses: actions/checkout@v2
+      
+# Update the DAST Scan Name to be uniuqe using SED command         
+      - name: Update DAST config file with uniuqe scan name
+        run: |
+         NOW=$(date +"%m-%d-%Y-%T")
+         sed -i 's/VeraDemo-DotNetCore-GitHub/VeraDemo-DotNetCore-GitHub-'${NOW}'/g' vc-dast-config.json
+
+# Visual confirmation of the scan submission details
+      - name: Display DAST config file with uniuqe scan name
+        run: |
+          cat vc-dast-config.json
+ 
+# DAST scan submission using the DAST API 
+      - name: Submit Veracode DAST Scan
+        run: |
+         pip install veracode-api-signing
+         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
+         http --verbose --auth-type=veracode_hmac POST "https://api.veracode.com/was/configservice/v1/analyses?job_options=run_verification=false" < vc-dast-config.json
