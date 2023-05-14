@@ -24,7 +24,7 @@ jobs:
 
 # Build the .Net applications    
     - name: Build App
-      run: dotnet publish app -c Debug /p:WebPublishMethod=Package /p:PackageLocation="../../"
+      run: dotnet publish app -c Debug /p:WebPublishMethod=Package /p:PackageLocation="../"
 
 # SAST and SCA scan with Veracode
     - name: Download Veracode
