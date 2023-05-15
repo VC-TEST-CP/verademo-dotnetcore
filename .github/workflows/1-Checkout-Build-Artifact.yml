@@ -63,9 +63,14 @@ jobs:
          -createsandbox true
          -sandboxname DailyBuild
          
-# Running Software Composition Analysis Agent against the local repo while on a Windows machine since this is ASPDotNet
 
-    - name: SCA Agent Scan of Repo
+# Workflow to run SCA Agent Scan
+  SCA-Advanced-Scan:
+    runs-on: ubuntu-latest
+    steps:    
+# Checkout code
+    - uses: actions/checkout@v3
+    - name: SCA Advanced Scan of Repo
       env: 
         SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
       run: |
@@ -79,7 +84,7 @@ jobs:
       run: |
           Set-ExecutionPolicy AllSigned -Scope Process -Force
           iex ((New-Object System.Net.WebClient).DownloadString('https://download.srcclr.com/ci.ps1'))
-          srcclr scan --image veracodedemolabs/verademo-dotnetcore-github:latest
+          srcclr -s scan --image veracodedemolabs/verademo-dotnetcore-github:latest
 
 # Workflow to run DAST Scan against QA server. 
   Submit-DAST-Scan:
