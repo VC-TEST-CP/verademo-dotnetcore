@@ -44,8 +44,10 @@ jobs:
          -appname SN-VeraDemo-DotNetCore-GitHub 
          -createprofile true
          -version ${{ github.run_id }}
-         -filepath app.zip
+         -filepath VeraDemoDotNetCoreAppArtifact.zip
          -teams ClintPollock-DemoApps2023 
+        
+#filepath should be updated to app.zip if you uncommented the above build steps.
 
 # Submit to Veracode SAST/SCA Sandbox Scan         
     - name: Submit to Veracode SAST/SCA Sandbox scan
