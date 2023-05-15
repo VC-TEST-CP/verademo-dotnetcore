@@ -16,7 +16,7 @@ jobs:
 # Checkout code
     - uses: actions/checkout@v3
 
-This section is commented out to save build minutes.  Instead, the build ZIP was uploaded to the repo.
+# This section is commented out to save build minutes.  Instead, the build ZIP was uploaded to the repo.
 #    - name: Setup .NET
 #      uses: actions/setup-dotnet@v2
 #      with:
