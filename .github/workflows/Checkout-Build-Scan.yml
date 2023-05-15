@@ -17,7 +17,6 @@ jobs:
     - uses: actions/checkout@v3
 
 This section is commented out to save build minutes.  Instead, the build ZIP was uploaded to the repo.
-# Setup the .Net environment    
 #    - name: Setup .NET
 #      uses: actions/setup-dotnet@v2
 #      with:
