@@ -66,7 +66,7 @@ jobs:
 
 # Workflow to run SCA Agent Scan
   SCA-Advanced-Scan:
-    runs-on: ubuntu-latest
+    runs-on: windows-2022
     steps:    
 # Checkout code
     - uses: actions/checkout@v3
