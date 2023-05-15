@@ -66,19 +66,25 @@ jobs:
 #--------------------------------------------------------------------------
 # Workflow to run SCA Agent Scan
   SCA-Advanced-Scan:
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
     steps:    
 # Checkout code
     - uses: actions/checkout@v3
-    - name: SCA Advanced Scan of Repo
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: SCA Repo
       env: 
         SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-      run: |
-          Set-ExecutionPolicy AllSigned -Scope Process -Force
-          iex ((New-Object System.Net.WebClient).DownloadString('https://download.srcclr.com/ci.ps1'))
-          srcclr scan app --allow-dirty
+      run: curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --updateadvisor app --json=SCA-Repo-Results-${{ github.run_id }}.json
 
-   # - name: SCA Advanced Scan of Container
+    - name: SCA Container Scan
+      env: 
+        SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
+      run: curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --updateadvisor --image veracodedemolabs/verademo-java-github:latest --json=SCA-Container-Results-${{ github.run_id }}.json
+
+# - name: SCA Advanced Scan of Container
    #   env: 
    #     SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
    #   run: |
