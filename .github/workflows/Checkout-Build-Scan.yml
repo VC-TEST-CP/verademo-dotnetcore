@@ -9,22 +9,23 @@ on:
     # Runs "Every day ay 6:05" (see https://crontab.guru)
     - cron: '5 6 * * *'
 jobs:
-  Checkout-Build-Artifact:
+  Checkout-Build-Scan:
     runs-on: windows-2022
     steps:
 
 # Checkout code
     - uses: actions/checkout@v3
 
+This section is commented out to save build minutes.  Instead, the build ZIP was uploaded to the repo.
 # Setup the .Net environment    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
+#    - name: Setup .NET
+#      uses: actions/setup-dotnet@v2
+#      with:
+#        dotnet-version: 6.0.x
 
 # Build the .Net applications    
-    - name: Build App
-      run: dotnet publish app -c Debug /p:WebPublishMethod=Package /p:PackageLocation="../"
+#    - name: Build App
+#      run: dotnet publish app -c Debug /p:WebPublishMethod=Package /p:PackageLocation="../"
 
 # Download Veracode
     - name: Download Veracode
@@ -47,7 +48,7 @@ jobs:
          -filepath app.zip
          -teams ClintPollock-DemoApps2023 
 
-# Use the UploadAndScan action to submit the artifact for scanning for Sandbox       
+# Submit to Veracode SAST/SCA Sandbox Scan         
     - name: Submit to Veracode SAST/SCA Sandbox scan
       env: 
          VERACODE_API_ID: ${{ secrets.VERACODE_API_ID }}
