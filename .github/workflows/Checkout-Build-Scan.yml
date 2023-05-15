@@ -77,12 +77,12 @@ jobs:
     - name: SCA Repo
       env: 
         SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-      run: curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --updateadvisor app --json=SCA-Repo-Results-${{ github.run_id }}.json
+      run: curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan app --json=SCA-Repo-Results-${{ github.run_id }}.json
 
     - name: SCA Container Scan
       env: 
         SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-      run: curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --updateadvisor --image veracodedemolabs/verademo-java-github:latest --json=SCA-Container-Results-${{ github.run_id }}.json
+      run: curl -sSL https://download.sourceclear.com/ci.sh | sh -s scan --image veracodedemolabs/verademo-java-github:latest --json=SCA-Container-Results-${{ github.run_id }}.json
 
 # - name: SCA Advanced Scan of Container
    #   env: 
